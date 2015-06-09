@@ -20,6 +20,7 @@
 		B065A91B1B27795D0051D08F /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B065A9191B27795D0051D08F /* CoreAudio.framework */; };
 		B065A91E1B2779660051D08F /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B065A91D1B2779660051D08F /* CoreMIDI.framework */; };
 		B084A0B81B27970200B6D37D /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = B084A0B71B27970200B6D37D /* .gitignore */; };
+		B084A0BA1B2797F900B6D37D /* GeneralUser GS MuseScore v1.442.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = B084A0B91B2797F900B6D37D /* GeneralUser GS MuseScore v1.442.sf2 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		B065A91A1B27795D0051D08F /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = System/Library/Frameworks/CoreAudioKit.framework; sourceTree = SDKROOT; };
 		B065A91D1B2779660051D08F /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
 		B084A0B71B27970200B6D37D /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		B084A0B91B2797F900B6D37D /* GeneralUser GS MuseScore v1.442.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GeneralUser GS MuseScore v1.442.sf2"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +119,7 @@
 		B065A8E21B27677E0051D08F /* Swift2MIDI */ = {
 			isa = PBXGroup;
 			children = (
+				B084A0B91B2797F900B6D37D /* GeneralUser GS MuseScore v1.442.sf2 */,
 				B065A9161B2772B90051D08F /* GeneralUser GS MuseScore v1.442.sf2 */,
 				B065A8E31B27677E0051D08F /* AppDelegate.swift */,
 				B065A8E51B27677E0051D08F /* ViewController.swift */,
@@ -250,6 +253,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B084A0BA1B2797F900B6D37D /* GeneralUser GS MuseScore v1.442.sf2 in Resources */,
 				B084A0B81B27970200B6D37D /* .gitignore in Resources */,
 				B065A9181B2772B90051D08F /* GeneralUser GS MuseScore v1.442.sf2 in Resources */,
 				B065A8EE1B27677E0051D08F /* LaunchScreen.storyboard in Resources */,
