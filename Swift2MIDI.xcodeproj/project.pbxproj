@@ -14,6 +14,12 @@
 		B065A8EE1B27677E0051D08F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B065A8EC1B27677E0051D08F /* LaunchScreen.storyboard */; };
 		B065A8F91B27677E0051D08F /* Swift2MIDITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B065A8F81B27677E0051D08F /* Swift2MIDITests.swift */; };
 		B065A9041B27677E0051D08F /* Swift2MIDIUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B065A9031B27677E0051D08F /* Swift2MIDIUITests.swift */; };
+		B065A9121B27679E0051D08F /* MIDIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B065A9111B27679E0051D08F /* MIDIManager.swift */; };
+		B065A9141B27722C0051D08F /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = B065A9131B27722C0051D08F /* README.md */; };
+		B065A9181B2772B90051D08F /* GeneralUser GS MuseScore v1.442.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = B065A9161B2772B90051D08F /* GeneralUser GS MuseScore v1.442.sf2 */; };
+		B065A91B1B27795D0051D08F /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B065A9191B27795D0051D08F /* CoreAudio.framework */; };
+		B065A91E1B2779660051D08F /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B065A91D1B2779660051D08F /* CoreMIDI.framework */; };
+		B084A0B81B27970200B6D37D /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = B084A0B71B27970200B6D37D /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +53,13 @@
 		B065A8FF1B27677E0051D08F /* Swift2MIDIUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Swift2MIDIUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B065A9031B27677E0051D08F /* Swift2MIDIUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swift2MIDIUITests.swift; sourceTree = "<group>"; };
 		B065A9051B27677E0051D08F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B065A9111B27679E0051D08F /* MIDIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MIDIManager.swift; sourceTree = "<group>"; };
+		B065A9131B27722C0051D08F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		B065A9161B2772B90051D08F /* GeneralUser GS MuseScore v1.442.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GeneralUser GS MuseScore v1.442.sf2"; sourceTree = "<group>"; };
+		B065A9191B27795D0051D08F /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		B065A91A1B27795D0051D08F /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = System/Library/Frameworks/CoreAudioKit.framework; sourceTree = SDKROOT; };
+		B065A91D1B2779660051D08F /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
+		B084A0B71B27970200B6D37D /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +67,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B065A91E1B2779660051D08F /* CoreMIDI.framework in Frameworks */,
+				B065A91B1B27795D0051D08F /* CoreAudio.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +92,11 @@
 		B065A8D71B27677E0051D08F = {
 			isa = PBXGroup;
 			children = (
+				B084A0B71B27970200B6D37D /* .gitignore */,
+				B065A91D1B2779660051D08F /* CoreMIDI.framework */,
+				B065A9191B27795D0051D08F /* CoreAudio.framework */,
+				B065A91A1B27795D0051D08F /* CoreAudioKit.framework */,
+				B065A9131B27722C0051D08F /* README.md */,
 				B065A8E21B27677E0051D08F /* Swift2MIDI */,
 				B065A8F71B27677E0051D08F /* Swift2MIDITests */,
 				B065A9021B27677E0051D08F /* Swift2MIDIUITests */,
@@ -97,12 +117,14 @@
 		B065A8E21B27677E0051D08F /* Swift2MIDI */ = {
 			isa = PBXGroup;
 			children = (
+				B065A9161B2772B90051D08F /* GeneralUser GS MuseScore v1.442.sf2 */,
 				B065A8E31B27677E0051D08F /* AppDelegate.swift */,
 				B065A8E51B27677E0051D08F /* ViewController.swift */,
 				B065A8E71B27677E0051D08F /* Main.storyboard */,
 				B065A8EA1B27677E0051D08F /* Assets.xcassets */,
 				B065A8EC1B27677E0051D08F /* LaunchScreen.storyboard */,
 				B065A8EF1B27677E0051D08F /* Info.plist */,
+				B065A9111B27679E0051D08F /* MIDIManager.swift */,
 			);
 			path = Swift2MIDI;
 			sourceTree = "<group>";
@@ -228,6 +250,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B084A0B81B27970200B6D37D /* .gitignore in Resources */,
+				B065A9181B2772B90051D08F /* GeneralUser GS MuseScore v1.442.sf2 in Resources */,
 				B065A8EE1B27677E0051D08F /* LaunchScreen.storyboard in Resources */,
 				B065A8EB1B27677E0051D08F /* Assets.xcassets in Resources */,
 				B065A8E91B27677E0051D08F /* Main.storyboard in Resources */,
@@ -257,6 +281,8 @@
 			files = (
 				B065A8E61B27677E0051D08F /* ViewController.swift in Sources */,
 				B065A8E41B27677E0051D08F /* AppDelegate.swift in Sources */,
+				B065A9141B27722C0051D08F /* README.md in Sources */,
+				B065A9121B27679E0051D08F /* MIDIManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -483,6 +509,7 @@
 				B065A90A1B27677E0051D08F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B065A90B1B27677E0051D08F /* Build configuration list for PBXNativeTarget "Swift2MIDITests" */ = {
 			isa = XCConfigurationList;
@@ -491,6 +518,7 @@
 				B065A90D1B27677E0051D08F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B065A90E1B27677E0051D08F /* Build configuration list for PBXNativeTarget "Swift2MIDIUITests" */ = {
 			isa = XCConfigurationList;
@@ -499,6 +527,7 @@
 				B065A9101B27677E0051D08F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
