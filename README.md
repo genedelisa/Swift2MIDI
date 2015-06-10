@@ -1,13 +1,15 @@
 # Swift2MIDI
 
-How to throw out your Objective-C trampoline and use Core MIDI in Swift.
+How to throw out your Objective-C trampoline and use CoreMIDI in Swift.
+
+Swift 2 added new functions to CoreMIDI to avoid C callbacks.
 
 I didn't include an Bonjour code here, so use the Audio MIDI Setup utility to connect to a network session.
 
 
 ## Blog post for this example.
 
-[Blog post](http://www.rockhoppertech.com/blog/swift2-midi/)
+[Blog post](http://www.rockhoppertech.com/blog/swift-2-and-coremidi)
 
 ## SoundFont
 

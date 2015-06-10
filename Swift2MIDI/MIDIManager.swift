@@ -45,13 +45,95 @@ class MIDIManager : NSObject {
     /**
     This will initialize the midiClient, outputPort, and inputPort variables.
     */
-    override init()    {
-        super.init()
-        
+//    override init()    {
+//        super.init()
+//        
+//        enableNetwork()
+//        
+//        var status = OSStatus(noErr)
+//        status = MIDIClientCreateWithBlock("MyMIDIClient", &midiClient, MyMIDINotifyBlock)
+//        
+//        if status == OSStatus(noErr) {
+//            print("created client")
+//        } else {
+//            print("error creating client : \(status)")
+//            showError(status)
+//        }
+//        
+//        if status == OSStatus(noErr) {
+//            
+//            status = MIDIInputPortCreateWithBlock(midiClient, "MyClient In", &inputPort, MyMIDIReadBlock)
+//            if status == OSStatus(noErr) {
+//                print("created input port")
+//            } else {
+//                print("error creating input port : \(status)")
+//                showError(status)
+//            }
+//            
+//            
+//            status = MIDIOutputPortCreate(midiClient,
+//                "My Output Port",
+//                &outputPort)
+//            if status == OSStatus(noErr) {
+//                print("created output port \(outputPort)")
+//            } else {
+//                print("error creating output port : \(status)")
+//                showError(status)
+//            }
+//            
+//            
+//            status = MIDIDestinationCreateWithBlock(midiClient,
+//                "Virtual Dest",
+//                &destEndpointRef,
+//                { (packetList:UnsafePointer<MIDIPacketList>, src:UnsafeMutablePointer<Void>) -> Void in
+//
+//                    let packets = packetList.memory
+//                    let packet:MIDIPacket = packets.packet.0
+//                    
+//                    // do the loop here...
+//                    
+//                    self.handle(packet)
+//
+//            })
+//          
+//            if status != noErr {
+//                print("error creating virtual destination: \(status)")
+//            } else {
+//                print("midi virtual destination created \(destEndpointRef)")
+//            }
+//            
+//
+//            
+//            connectSourcesToInputPort()
+//            initGraph()
+//            
+//            playWithMusicPlayer()
+//
+//        }
+//        
+//        
+//    }
+    
+    func initMIDI(midiNotifier: MIDINotifyBlock? = nil, reader: MIDIReadBlock? = nil) {
         enableNetwork()
         
+        var notifyBlock: MIDINotifyBlock
+        
+        if midiNotifier != nil {
+            notifyBlock = midiNotifier!
+        } else {
+            notifyBlock = MyMIDINotifyBlock
+        }
+        
+        var readBlock: MIDIReadBlock
+        if reader != nil {
+            readBlock = reader!
+        } else {
+            readBlock = MyMIDIReadBlock
+        }
+        
         var status = OSStatus(noErr)
-        status = MIDIClientCreateWithBlock("MyMIDIClient", &midiClient, MyMIDINotifyBlock)
+        status = MIDIClientCreateWithBlock("MyMIDIClient", &midiClient, notifyBlock)
         
         if status == OSStatus(noErr) {
             print("created client")
@@ -59,10 +141,9 @@ class MIDIManager : NSObject {
             print("error creating client : \(status)")
             showError(status)
         }
-        
         if status == OSStatus(noErr) {
             
-            status = MIDIInputPortCreateWithBlock(midiClient, "MyClient In", &inputPort, MyMIDIReadBlock)
+            status = MIDIInputPortCreateWithBlock(midiClient, "MyClient In", &inputPort, readBlock)
             if status == OSStatus(noErr) {
                 print("created input port")
             } else {
@@ -81,15 +162,43 @@ class MIDIManager : NSObject {
                 showError(status)
             }
             
+            
+            status = MIDIDestinationCreateWithBlock(midiClient,
+                "Virtual Dest",
+                &destEndpointRef,
+                readBlock)
+            
+            // or if you want to use a closure
+//            status = MIDIDestinationCreateWithBlock(midiClient,
+//                "Virtual Dest",
+//                &destEndpointRef,
+//                { (packetList:UnsafePointer<MIDIPacketList>, src:UnsafeMutablePointer<Void>) -> Void in
+//                    
+//                    let packets = packetList.memory
+//                    let packet:MIDIPacket = packets.packet.0
+//                    
+//                    // do the loop here...
+//                    
+//                    self.handle(packet)
+//                    
+//            })
+            
+            if status != noErr {
+                print("error creating virtual destination: \(status)")
+            } else {
+                print("midi virtual destination created \(destEndpointRef)")
+            }
+            
+            
+            
             connectSourcesToInputPort()
             initGraph()
             
-            playWithMusicPlayer()
-
         }
         
-        
+
     }
+    
     
     func initGraph() {
         augraphSetup()
@@ -190,6 +299,7 @@ class MIDIManager : NSObject {
         
         let notification = midiNotification.memory
         print("MIDI Notify, messageId= \(notification.messageID)")
+        print("MIDI Notify, messageSize= \(notification.messageSize)")
         
         // values are now an enum!
         
@@ -198,18 +308,44 @@ class MIDIManager : NSObject {
             print("MIDI setup changed")
             break
             
+            //TODO: so how to "downcast" to MIDIObjectAddRemoveNotification
         case .MsgObjectAdded:
             
             print("added")
-            //let mm = notification as? MIDIObjectAddRemoveNotification
+            
+            var mem = midiNotification.memory
+            withUnsafePointer(&mem) { ptr -> Void in
+                let mp = unsafeBitCast(ptr, UnsafePointer<MIDIObjectAddRemoveNotification>.self)
+                let m = mp.memory
+                print("id \(m.messageID)")
+                print("size \(m.messageSize)")
+                print("child \(m.child)")
+                print("child type \(m.childType)")
+                print("parent \(m.parent)")
+                print("parentType \(m.parentType)")
+            }
+
+
+           // let mm = midiNotification.memory as? MIDIObjectAddRemoveNotification
             
             // MIDINotification and MIDIObjectAddRemoveNotification are unrelated structs
             // cannot simply cast them.
             
+            
+           // fatal error: can't unsafeBitCast between types of different sizes
+
             // won't work
 //            let m:MIDIObjectAddRemoveNotification =
 //            unsafeBitCast(notification, MIDIObjectAddRemoveNotification.self)
-//            
+   
+            //func unsafeBitCast<T, U>(x: T, _: U.Type) -> U
+            // let m = unsafeBitCast(midiNotification.memory, MIDIObjectAddRemoveNotification.self)
+            
+            //func unsafeDowncast<T>(x: AnyObject) -> T
+            //let m:MIDIObjectAddRemoveNotification = unsafeDowncast(midiNotification.memory)
+
+            
+//
 //            print("id \(m.messageID)")
 //            print("size \(m.messageSize)")
 //            print("child \(m.child)")
@@ -225,6 +361,29 @@ class MIDIManager : NSObject {
             
         case .MsgPropertyChanged:
             print("kMIDIMsgPropertyChanged")
+            
+            var mem = midiNotification.memory
+            withUnsafePointer(&mem) { ptr -> Void in
+                let mp = unsafeBitCast(ptr, UnsafePointer<MIDIObjectPropertyChangeNotification>.self)
+                let m = mp.memory
+                print("id \(m.messageID)")
+                print("size \(m.messageSize)")
+                print("object \(m.object)")
+                print("objectType  \(m.objectType)")
+                if m.propertyName.takeUnretainedValue() == kMIDIPropertyOffline {
+                    var value = Int32(0)
+                    let status = MIDIObjectGetIntegerProperty(m.object, kMIDIPropertyOffline, &value)
+                    if status != noErr {
+                        print("oops")
+                    }
+                    print("The offline property is \(value)")
+                }
+                
+//                let name = m.propertyName.takeUnretainedValue() as String
+//                print("propertyName \(name)")
+//                print("propertyName \(m.propertyName)")
+            }
+            
             break
             
         case .MsgThruConnectionsChanged:
@@ -237,6 +396,7 @@ class MIDIManager : NSObject {
             
         case .MsgIOError:
             print("MIDI I/O error.")
+            //MIDIIOErrorNotification
             break
             
         }
@@ -302,6 +462,7 @@ class MIDIManager : NSObject {
         }
     }
     
+        
     func enableNetwork() {
         let session = MIDINetworkSession.defaultSession()
         session.enabled = true
