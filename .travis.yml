@@ -1,13 +1,11 @@
 # file: .travis.yml
 language: objective-c
-#osx_image: xcode7
-#xcode_project: Swift2MIDI.xcodeproj
-#xcode_scheme: Swift2MIDI
 
 before_install:
 - brew update
 - brew outdated xctool || brew upgrade xctool
 - gem install xcpretty -N
+
 
 script:
 
