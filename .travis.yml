@@ -1,8 +1,8 @@
 # file: .travis.yml
 language: objective-c
-osx_image: xcode7
-xcode_project: Swift2MIDI.xcodeproj
-xcode_scheme: Swift2MIDI
+#osx_image: xcode7
+#xcode_project: Swift2MIDI.xcodeproj
+#xcode_scheme: Swift2MIDI
 
 before_install:
 - brew update
@@ -11,9 +11,13 @@ before_install:
 
 script:
 
-- xctool -project Swift2MIDI.xcodeproj -scheme "Swift2MIDI" -sdk iphoneos9.0 -configuration Debug -PBXBuildsContinueAfterErrors=0 test | xcpretty -c
+# - xctool -project Swift2MIDI.xcodeproj -scheme "Swift2MIDI" -sdk iphoneos -configuration Debug -PBXBuildsContinueAfterErrors=0 test | xcpretty -c
 
 #- xctool -project Swift2MIDI.xcodeproj -scheme "Swift2MIDI" -sdk iphoneos9.0 -configuration Debug -destination "platform=OS X" -PBXBuildsContinueAfterErrors=0 test | xcpretty -c
+
+script:
+- xctool clean build -project Swift2MIDI.xcodeproj -scheme Swift2MIDI  | xcpretty -c
+- xctool test -project Swift2MIDI.xcodeproj -scheme Swift2MIDITests  | xcpretty -c
 
 
 # http://docs.travis-ci.com/user/languages/objective-c/
