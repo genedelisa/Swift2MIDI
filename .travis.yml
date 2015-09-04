@@ -15,7 +15,6 @@ script:
 
 #- xctool -project Swift2MIDI.xcodeproj -scheme "Swift2MIDI" -sdk iphoneos9.0 -configuration Debug -destination "platform=OS X" -PBXBuildsContinueAfterErrors=0 test | xcpretty -c
 
-script:
 - xctool clean build -project Swift2MIDI.xcodeproj -scheme Swift2MIDI  | xcpretty -c
 - xctool test -project Swift2MIDI.xcodeproj -scheme Swift2MIDITests  | xcpretty -c
 
