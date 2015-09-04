@@ -19,6 +19,7 @@
 		B065A91E1B2779660051D08F /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B065A91D1B2779660051D08F /* CoreMIDI.framework */; };
 		B072977E1B279B4E00E532F6 /* GeneralUser GS MuseScore v1.442.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = B072977D1B279B4E00E532F6 /* GeneralUser GS MuseScore v1.442.sf2 */; };
 		B084A0B81B27970200B6D37D /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = B084A0B71B27970200B6D37D /* .gitignore */; };
+		B0BF6F6F1B99AF2C008510F3 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = B0BF6F6E1B99AF2C008510F3 /* LICENSE */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		B065A91D1B2779660051D08F /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
 		B072977D1B279B4E00E532F6 /* GeneralUser GS MuseScore v1.442.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GeneralUser GS MuseScore v1.442.sf2"; sourceTree = "<group>"; };
 		B084A0B71B27970200B6D37D /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		B0BF6F6E1B99AF2C008510F3 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,12 +93,13 @@
 		B065A8D71B27677E0051D08F = {
 			isa = PBXGroup;
 			children = (
+				B0BF6F6E1B99AF2C008510F3 /* LICENSE */,
+				B065A9131B27722C0051D08F /* README.md */,
 				B072977D1B279B4E00E532F6 /* GeneralUser GS MuseScore v1.442.sf2 */,
 				B084A0B71B27970200B6D37D /* .gitignore */,
 				B065A91D1B2779660051D08F /* CoreMIDI.framework */,
 				B065A9191B27795D0051D08F /* CoreAudio.framework */,
 				B065A91A1B27795D0051D08F /* CoreAudioKit.framework */,
-				B065A9131B27722C0051D08F /* README.md */,
 				B065A8E21B27677E0051D08F /* Swift2MIDI */,
 				B065A8F71B27677E0051D08F /* Swift2MIDITests */,
 				B065A9021B27677E0051D08F /* Swift2MIDIUITests */,
@@ -250,6 +253,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0BF6F6F1B99AF2C008510F3 /* LICENSE in Resources */,
 				B084A0B81B27970200B6D37D /* .gitignore in Resources */,
 				B065A8EE1B27677E0051D08F /* LaunchScreen.storyboard in Resources */,
 				B065A8EB1B27677E0051D08F /* Assets.xcassets in Resources */,
