@@ -14,6 +14,12 @@ import AudioToolbox
 /// The `Singleton` instance
 private let MIDIManagerInstance = MIDIManager()
 
+
+// this works.
+func myGlobalProc (notification:UnsafePointer<MIDINotification>, refcon:UnsafeMutablePointer<Void>) {
+    
+}
+
 /**
 # MIDIManager
 
@@ -42,13 +48,182 @@ class MIDIManager : NSObject {
     
     var samplerUnit = AudioUnit()
     
+
+
+//    @convention(c)
+    func myNotifyProc (notification:UnsafePointer<MIDINotification>, refcon:UnsafeMutablePointer<Void>) {
+        
+    }
+
+   
+    
+
+    
+    // typealias MIDIReadProc = (UnsafePointer<MIDIPacketList>, UnsafeMutablePointer<Void>, UnsafeMutablePointer<Void>) -> Void
+
     
     /**
     This will initialize the midiClient, outputPort, and inputPort variables.
     */
     
+    func initWithFunc() {
+        var status = OSStatus(noErr)
+        
+        // or with the "original" factory function
+        let np:MIDINotifyProc = { (notification:UnsafePointer<MIDINotification>, refcon:UnsafeMutablePointer<Void>) in
+        }
+        
+        status = MIDIClientCreate("MyMIDIClient", np, nil, &midiClient)
+        
+        // nope:
+       // let np2: @convention(c) (notification:UnsafePointer<MIDINotification>, refcon:UnsafeMutablePointer<Void>) = myproc
+
+//        let np2: @convention(c) (MIDINotifyProc) = myproc
+//        let np2:MIDINotifyProc @convention(c) {}
+//        let np2:MIDINotifyProc = @convention(c) myproc
+//        let np2 :@convention(c) MIDINotifyProc = myproc
+        status = MIDIClientCreate("MyMIDIClient",   myGlobalProc, nil, &midiClient)
+       // status = MIDIClientCreate("MyMIDIClient",   myNotifyProc, nil, &midiClient)
+        
+        
+        
+//        status = MIDIClientCreate("MyMIDIClient", np2, nil, &midiClient)
+//        func MIDIClientCreate(name: CFString, _ notifyProc: MIDINotifyProc?, _ notifyRefCon: UnsafeMutablePointer<Void>, _ outClient: UnsafeMutablePointer<MIDIClientRef>) -> OSStatus
+
+//        let swiftCallback : @convention(c) (CGFloat, CGFloat) -> CGFloat = {
+//            (x, y) -> CGFloat in
+//            return x + y
+//        } 
+
+
+    }
+    
+
+    //TODO: does this work?
+    func createThru(source:MIDIEndpointRef?, dest:MIDIEndpointRef?) {
+
+        var status = OSStatus(noErr)
+        
+        var thru = MIDIThruConnectionRef()
+        
+        var params = MIDIThruConnectionParams()
+        MIDIThruConnectionParamsInitialize(&params)
+
+        if let s = source {
+            params.sources.0.endpointRef = s // it's a tuple
+            params.numSources = 1
+        }
+
+        if let d = dest {
+            params.destinations.0.endpointRef = d
+            params.numDestinations = 1
+        }
+        params.lowNote = 65
+        
+        let size = MIDIThruConnectionParamsSize(&params)
+        let nsdata = withUnsafePointer(&params) { p in
+            NSData(bytes: p, length: MIDIThruConnectionParamsSize(&params))
+        }
+        let pointer = UnsafeMutablePointer<MIDIThruConnectionParams>.alloc(size)
+//        let pointer = UnsafeMutablePointer<MIDIThruConnectionParams>.alloc(sizeof(MIDIThruConnectionParams.Type))
+        nsdata.getBytes(pointer, length:MIDIThruConnectionParamsSize(&params))
+        let data = CFDataCreate(kCFAllocatorDefault,
+            UnsafePointer<UInt8>(pointer),
+            size)
+        
+        status = MIDIThruConnectionCreate("MyMIDIThru", data, &thru)
+        if status == noErr {
+            print("created thru \(thru)")
+        } else {
+            print("error creating thru \(status)")
+        }
+        
+//        func MIDIThruConnectionCreate(inPersistentOwnerID: CFString?, _ inConnectionParams: CFData, _ outConnection: UnsafeMutablePointer<MIDIThruConnectionRef>) -> OSStatus
+
+    }
+    
+    func createThru2(source:MIDIEndpointRef?, dest:MIDIEndpointRef?) {
+        
+        var status = OSStatus(noErr)
+        
+        var thru = MIDIThruConnectionRef()
+        
+        var params = MIDIThruConnectionParams()
+        MIDIThruConnectionParamsInitialize(&params)
+        
+        if let s = source {
+            params.sources.0.endpointRef = s // it's a tuple
+            params.numSources = 1
+        }
+        
+        if let d = dest {
+            params.destinations.0.endpointRef = d
+            params.numDestinations = 1
+        }
+        params.lowNote = 65
+        
+        let nsdata = withUnsafePointer(&params) { p in
+            NSData(bytes: p, length: MIDIThruConnectionParamsSize(&params))
+        }
+        
+        // toll free bridge from CFData to NSData
+        status = MIDIThruConnectionCreate("MyMIDIThru", nsdata, &thru)
+        if status == noErr {
+            print("created thru \(thru)")
+        } else {
+            print("error creating thru \(status)")
+        }
+        
+    }
+
+    /*
+    func meta() {
+        //func MusicTrackNewMetaEvent(inTrack: MusicTrack, _ inTimeStamp: MusicTimeStamp, _ inMetaEvent: UnsafePointer<MIDIMetaEvent>) -> OSStatus
+        let track = MusicTrack()
+       
+        let name = "Track name"
+        var byteArray = [UInt8]()
+//        var byteArray = (UInt8)()
+        for char in name.utf8{
+            byteArray += [char]
+        }
+
+
+        let data = name.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
+//        let bytes:(UInt8) = data.bytes.memory
+        let meta = MIDIMetaEvent(UInt8(0x03),
+            unused1:UInt8(0),
+            unused2:UInt8(0),
+            unused3:UInt8(0),
+            dataLength:UInt32(name.characters.count),
+            data:byteArray)
+//        data:data.bytes.memory)
+        
+        
+        MusicTrackNewMetaEvent(track, MusicTimeStamp(0), &meta)
+
+
+    }
+    */
+    /*
+    struct MIDIMetaEvent {
+    
+    var metaEventType: UInt8
+    var unused1: UInt8
+    var unused2: UInt8
+    var unused3: UInt8
+    var dataLength: UInt32
+    var data: (UInt8)
+    init()
+    init(metaEventType: UInt8, unused1: UInt8, unused2: UInt8, unused3: UInt8, dataLength: UInt32, data: (UInt8))
+    }
+    
+    */
+    
     func initMIDI(midiNotifier: MIDINotifyBlock? = nil, reader: MIDIReadBlock? = nil) {
         enableNetwork()
+        
+
         
         var notifyBlock: MIDINotifyBlock
         
@@ -66,7 +241,17 @@ class MIDIManager : NSObject {
         }
         
         var status = OSStatus(noErr)
-        status = MIDIClientCreateWithBlock("MyMIDIClient", &midiClient, notifyBlock)
+        status = MIDIClientCreateWithBlock("com.rockhoppertech.MyMIDIClient", &midiClient, notifyBlock)
+
+        // or with the "original" factory function
+//        let np:MIDINotifyProc = { (notification:UnsafePointer<MIDINotification>, refcon:UnsafeMutablePointer<Void>) in
+//        }
+//        status = MIDIClientCreate("MyMIDIClient", np, nil, &midiClient)
+        
+        // nope:
+        //let np2 = myproc
+        //status = MIDIClientCreate("MyMIDIClient", np2, nil, &midiClient)
+
         
         if status == OSStatus(noErr) {
             print("created client")
@@ -76,7 +261,7 @@ class MIDIManager : NSObject {
         }
         if status == OSStatus(noErr) {
             
-            status = MIDIInputPortCreateWithBlock(midiClient, "MyClient In", &inputPort, readBlock)
+            status = MIDIInputPortCreateWithBlock(midiClient, "com.rockhoppertech.InputPort", &inputPort, readBlock)
             if status == OSStatus(noErr) {
                 print("created input port")
             } else {
@@ -86,7 +271,7 @@ class MIDIManager : NSObject {
             
             
             status = MIDIOutputPortCreate(midiClient,
-                "My Output Port",
+                "com.rockhoppertech.OutputPort",
                 &outputPort)
             if status == OSStatus(noErr) {
                 print("created output port \(outputPort)")
@@ -95,9 +280,11 @@ class MIDIManager : NSObject {
                 showError(status)
             }
             
+            createThru(inputPort, dest: outputPort)
+            
             
             status = MIDIDestinationCreateWithBlock(midiClient,
-                "Virtual Dest",
+                "com.rockhoppertech.VirtualDest",
                 &destEndpointRef,
                 readBlock)
             
@@ -132,6 +319,12 @@ class MIDIManager : NSObject {
 
     }
     
+    // typealias MIDINotifyProc = (UnsafePointer<MIDINotification>, UnsafeMutablePointer<Void>) -> Void
+//    @convention(c)
+//    func myproc (notification:UnsafePointer<MIDINotification>, refcon:UnsafeMutablePointer<Void>) {
+//        
+//    }
+    
     
     func initGraph() {
         augraphSetup()
@@ -150,7 +343,7 @@ class MIDIManager : NSObject {
         
         let packets = packetList.memory
 
-        let packet:MIDIPacket = packets.packet.0
+        let packet:MIDIPacket = packets.packet
 
         // don't do this
 //        print("packet \(packet)")
@@ -161,11 +354,11 @@ class MIDIManager : NSObject {
         for _ in 0 ..< packets.numPackets {
 
             let p = ap.memory
-            print("timestamp \(p.timeStamp)", appendNewline:false)
+            print("timestamp \(p.timeStamp)", terminator: "")
             var hex = String(format:"0x%X", p.data.0)
-            print(" \(hex)", appendNewline:false)
+            print(" \(hex)", terminator: "")
             hex = String(format:"0x%X", p.data.1)
-            print(" \(hex)", appendNewline:false)
+            print(" \(hex)", terminator: "")
             hex = String(format:"0x%X", p.data.2)
             print(" \(hex)")
 
@@ -421,11 +614,11 @@ class MIDIManager : NSObject {
     
     func playMusicPlayer() {
         var status = OSStatus(noErr)
-        var playing = Boolean(0)
+        var playing = DarwinBoolean(false)
         
         if let player = self.musicPlayer {
             status = MusicPlayerIsPlaying(player, &playing)
-            if playing != 0 {
+            if playing != false {
                 print("music player is playing. stopping")
                 status = MusicPlayerStop(player)
                 if status != OSStatus(noErr) {
@@ -578,19 +771,19 @@ class MIDIManager : NSObject {
         //https://developer.apple.com/library/prerelease/ios/documentation/AudioToolbox/Reference/AUGraphServicesReference/index.html#//apple_ref/c/func/AUGraphIsInitialized
         
         var status = OSStatus(noErr)
-        var outIsInitialized:Boolean = 0
+        var outIsInitialized:DarwinBoolean = false
         status = AUGraphIsInitialized(self.processingGraph, &outIsInitialized)
         print("isinit status is \(status)")
         print("bool is \(outIsInitialized)")
-        if outIsInitialized == 0 {
+        if outIsInitialized == false {
             status = AUGraphInitialize(self.processingGraph)
             CheckError(status)
         }
         
-        var isRunning = Boolean(0)
+        var isRunning = DarwinBoolean(false)
         AUGraphIsRunning(self.processingGraph, &isRunning)
         print("running bool is \(isRunning)")
-        if isRunning == 0 {
+        if isRunning == false {
             status = AUGraphStart(self.processingGraph)
             CheckError(status)
         }
@@ -644,7 +837,7 @@ class MIDIManager : NSObject {
     func CheckError(error:OSStatus) {
         if error == 0 {return}
         
-        switch(Int(error)) {
+        switch(error) {
         case kMIDIInvalidClient :
             print( "kMIDIInvalidClient ")
             

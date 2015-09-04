@@ -37,7 +37,7 @@ class ViewController: UIViewController {
     func MyMIDIReadBlock(packetList: UnsafePointer<MIDIPacketList>, srcConnRefCon: UnsafeMutablePointer<Void>) -> Void {
 
         let packets = packetList.memory
-        let packet:MIDIPacket = packets.packet.0
+        let packet:MIDIPacket = packets.packet
         var ap = UnsafeMutablePointer<MIDIPacket>.alloc(1)
         ap.initialize(packet)
         
@@ -80,7 +80,7 @@ class ViewController: UIViewController {
                 })
                 
             case 0xA0:
-                print("Polyphonic Key Pressure (Aftertouch). Channel \(channel) note \(d1) pressure \(d2)")
+                print("Polyphonic Key Pressure (Aftertouch). Channel \(channel) note \(d1) pressure \(d2)", terminator: "")
                 dispatch_async(dispatch_get_main_queue(), {
                     self.textView.text = self.textView.text.stringByAppendingString("Note on. Channel \(channel) note \(d1) velocity \(d2)\n")
                 })
@@ -107,47 +107,47 @@ class ViewController: UIViewController {
                     
                 })
             case 0xFE:
-                print("active sensing")
+                print("active sensing", terminator: "")
                 dispatch_async(dispatch_get_main_queue(), {
                     self.textView.text = self.textView.text.stringByAppendingString("\n")
                 })
                 
             default:
                 let hex = String(status, radix: 16, uppercase: true)
-                print("Unhandled message \(status) \(hex)")
+                print("Unhandled message \(status) \(hex)", terminator: "")
             }
         }
         
         if status >= 0xF0 {
             switch status {
             case 0xF0:
-                print("Sysex")
+                print("Sysex", terminator: "")
             case 0xF1:
-                print("MIDI Time Code")
+                print("MIDI Time Code", terminator: "")
             case 0xF2:
-                print("Song Position Pointer")
+                print("Song Position Pointer", terminator: "")
             case 0xF3:
-                print("Song Select")
+                print("Song Select", terminator: "")
             case 0xF4:
-                print("Reserved")
+                print("Reserved", terminator: "")
             case 0xF5:
-                print("Reserved")
+                print("Reserved", terminator: "")
             case 0xF6:
-                print("Tune request")
+                print("Tune request", terminator: "")
             case 0xF7:
-                print("End of SysEx")
+                print("End of SysEx", terminator: "")
             case 0xF8:
-                print("Timing clock")
+                print("Timing clock", terminator: "")
             case 0xF9:
-                print("Reserved")
+                print("Reserved", terminator: "")
             case 0xFA:
-                print("Start")
+                print("Start", terminator: "")
             case 0xFB:
-                print("Continue")
+                print("Continue", terminator: "")
             case 0xFC:
-                print("Stop")
+                print("Stop", terminator: "")
             case 0xFD:
-                print("Start")
+                print("Start", terminator: "")
                 
             default: break
                 
