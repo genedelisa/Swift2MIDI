@@ -11,7 +11,9 @@ before_install:
 
 script:
 
-- xctool -project Swift2MIDI.xcodeproj -scheme "Swift2MIDI" -sdk iPhoneOS9.0.sdk -configuration Debug -destination "platform=OS X" -PBXBuildsContinueAfterErrors=0 test | xcpretty -c
+- xctool -project Swift2MIDI.xcodeproj -scheme "Swift2MIDI" -sdk iphoneos9.0 -configuration Debug -PBXBuildsContinueAfterErrors=0 test | xcpretty -c
+
+#- xctool -project Swift2MIDI.xcodeproj -scheme "Swift2MIDI" -sdk iphoneos9.0 -configuration Debug -destination "platform=OS X" -PBXBuildsContinueAfterErrors=0 test | xcpretty -c
 
 
 # http://docs.travis-ci.com/user/languages/objective-c/
