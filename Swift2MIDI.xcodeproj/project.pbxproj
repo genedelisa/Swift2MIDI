@@ -20,6 +20,7 @@
 		B072977E1B279B4E00E532F6 /* GeneralUser GS MuseScore v1.442.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = B072977D1B279B4E00E532F6 /* GeneralUser GS MuseScore v1.442.sf2 */; };
 		B084A0B81B27970200B6D37D /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = B084A0B71B27970200B6D37D /* .gitignore */; };
 		B0BF6F6F1B99AF2C008510F3 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = B0BF6F6E1B99AF2C008510F3 /* LICENSE */; };
+		B0BF6F711B99B310008510F3 /* .travis.yml in Resources */ = {isa = PBXBuildFile; fileRef = B0BF6F701B99B310008510F3 /* .travis.yml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		B072977D1B279B4E00E532F6 /* GeneralUser GS MuseScore v1.442.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GeneralUser GS MuseScore v1.442.sf2"; sourceTree = "<group>"; };
 		B084A0B71B27970200B6D37D /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		B0BF6F6E1B99AF2C008510F3 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		B0BF6F701B99B310008510F3 /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 		B065A8D71B27677E0051D08F = {
 			isa = PBXGroup;
 			children = (
+				B0BF6F701B99B310008510F3 /* .travis.yml */,
 				B0BF6F6E1B99AF2C008510F3 /* LICENSE */,
 				B065A9131B27722C0051D08F /* README.md */,
 				B072977D1B279B4E00E532F6 /* GeneralUser GS MuseScore v1.442.sf2 */,
@@ -258,6 +261,7 @@
 				B065A8EE1B27677E0051D08F /* LaunchScreen.storyboard in Resources */,
 				B065A8EB1B27677E0051D08F /* Assets.xcassets in Resources */,
 				B072977E1B279B4E00E532F6 /* GeneralUser GS MuseScore v1.442.sf2 in Resources */,
+				B0BF6F711B99B310008510F3 /* .travis.yml in Resources */,
 				B065A8E91B27677E0051D08F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
